@@ -1,0 +1,38 @@
+server:
+  port: 8001
+spring:
+  application:
+    name: user-service
+  datasource:
+    url: jdbc:mysql://47.108.31.41:3306/jd?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: l(=8gp_04h*&
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    minPoolSize: 3
+    maxPoolSize: 10
+    maxLifetime: 20000
+    borrowConnectionTimeout: 30
+    loginTimeout: 30
+    mainteanceInterval: 60
+    maxIdleTime: 60
+## mybatis配置
+mybatis:
+  mapper-locations: classpath:com/goudong/dao/*.xml
+  #  type-aliases-package: com.example.entity
+  configuration:
+    #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 输出sql语句
+    map-underscore-to-camel-case: true #开启驼峰命名转换
+  # mybatis使用分页插件
+  pagehelper:
+    helperDialect: mysql
+    reasonable: true
+    supportMethodsArguments: true
+    params: count=countSql
+
+# ===== 自定义swagger配置 ===== #
+swagger:
+  enable: true
+  application-name: ${spring.application.name}
+  application-version: 1.0
+  application-description: springfox swagger 3.0整合Demo
+  try-host: http://localhost:${server.port}
