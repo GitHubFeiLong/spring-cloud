@@ -14,8 +14,8 @@ import springfox.documentation.oas.annotations.EnableOpenApi;
  */
 @EnableOpenApi
 @SpringBootApplication
-public class Oauth2Service {
+public class Oauth2Application {
     public static void main(String[] args) {
-        SpringApplication.run(Oauth2Service.class, args);
+        SpringApplication.run(Oauth2Application.class, args);
     }
 }

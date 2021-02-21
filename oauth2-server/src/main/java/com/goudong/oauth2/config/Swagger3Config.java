@@ -1,6 +1,7 @@
-package com.goudong.all.config;
+package com.goudong.oauth2.config;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -17,12 +18,13 @@ import java.util.LinkedHashSet;
  * 配置 swagger<br>
  * 访问 ip:port/swagger-ui/index.html#/
  * ip:port/swagger-ui
+ *
  * @ClassName Swagger3Config
  * @Author msi
  * @Date 2020/10/17 10:00
  * @Version 1.0
  */
-//@Configuration
+@Configuration
 public class Swagger3Config {
 
     @Bean

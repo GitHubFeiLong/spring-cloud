@@ -27,7 +27,7 @@ import java.util.LinkedHashSet;
 public class Swagger3Config {
 
     @Bean
-    public Docket docket() {
+    public Docket docket1() {
         ApiInfo apiInfo = new ApiInfoBuilder()
                 .title("user-service")
                 .description("用户模块的api")
@@ -53,10 +53,16 @@ public class Swagger3Config {
     }
 
     @Bean
-    public Docket docket1() {
+    public Docket docket2() {
+        ApiInfo apiInfo = new ApiInfoBuilder()
+                .title("OAuth-service")
+                .description("api信息列表")
+                .version("1.0")
+                .contact(new Contact("Evan", "http://www.baidu.com", "123456@qq.com"))
+                .build();
         return new Docket(DocumentationType.OAS_30)
                 .enable(true)
-                .apiInfo(apiInfo2())
+                .apiInfo(apiInfo)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.goudong.oauth2"))
                 .paths(PathSelectors.any())
@@ -66,14 +72,5 @@ public class Swagger3Config {
                 .groupName("group2")
                 ;
 
-    }
-
-    public ApiInfo apiInfo2() {
-        return new ApiInfoBuilder()
-                .title("OAuth-service")
-                .description("api信息列表")
-                .version("1.0")
-                .contact(new Contact("Evan", "http://www.baidu.com", "123456@qq.com"))
-                .build();
     }
 }
