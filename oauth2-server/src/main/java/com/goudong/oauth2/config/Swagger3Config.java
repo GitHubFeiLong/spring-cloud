@@ -30,8 +30,8 @@ public class Swagger3Config {
     @Bean
     public Docket docket() {
         ApiInfo apiInfo = new ApiInfoBuilder()
-                .title("user-service")
-                .description("用户模块的api")
+                .title("QQ模块")
+                .description("qq相关的认证")
                 .version("1.0")
                 .contact(new Contact("Evan", "http://www.baidu.com", "123456@qq.com"))
                 .build();
@@ -42,39 +42,36 @@ public class Swagger3Config {
                 .select()
                 // 全部扫描
                 //.apis(RequestHandlerSelectors.any())
-                .apis(RequestHandlerSelectors.basePackage("com.goudong.user"))
+                .apis(RequestHandlerSelectors.basePackage("com.goudong.oauth2.qq"))
                 .paths(PathSelectors.any())
                 .build()
                 // 支持的通讯协议集合
                 .protocols(new LinkedHashSet<>(Arrays.asList("http", "https")))
                 // 在子模块中使用groupName 可以使用右上的下拉功能
-                .groupName("group1")
+                .groupName("QQ")
                 ;
 
     }
 
     @Bean
     public Docket docket1() {
+        ApiInfo apiInfo =  new ApiInfoBuilder()
+                .title("WeChat")
+                .description("微信OAuth")
+                .version("1.0")
+                .contact(new Contact("Evan", "http://www.baidu.com", "123456@qq.com"))
+                .build();
         return new Docket(DocumentationType.OAS_30)
                 .enable(true)
-                .apiInfo(apiInfo2())
+                .apiInfo(apiInfo)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.goudong.oauth2"))
                 .paths(PathSelectors.any())
                 .build()
                 // 支持的通讯协议集合
                 .protocols(new LinkedHashSet<>(Arrays.asList("http", "https")))
-                .groupName("group2")
+                .groupName("WeChat")
                 ;
 
-    }
-
-    public ApiInfo apiInfo2() {
-        return new ApiInfoBuilder()
-                .title("OAuth-service")
-                .description("api信息列表")
-                .version("1.0")
-                .contact(new Contact("Evan", "http://www.baidu.com", "123456@qq.com"))
-                .build();
     }
 }
