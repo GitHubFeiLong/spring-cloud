@@ -2,6 +2,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!-- 声明项目描述符遵循哪一个POM模型版本。模型本身的版本很少改变，虽然如此，但它仍然是必不可少的，
+        这是为了当Maven引入了新的特性或者其他模型变更的时候，确保稳定性。 -->
     <modelVersion>4.0.0</modelVersion>
     <!--子模块-->
     <modules>
@@ -20,10 +22,13 @@
     <groupId>org.goudong</groupId>
     <artifactId>goudong</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <!-- 项目产生的构件类型，例如jar、war、ear、pom。插件可以创建他们自己的构件类型，所以前面列的不是全部构件类型 -->
     <packaging>pom</packaging>
 
+    <!-- 项目的名称, Maven产生的文档用 -->
+    <name>goudong</name>
 
-    <!--版本号统一管理-->
+    <!-- 以值替代名称，Properties可以在整个POM中使用，也可以作为触发条件（见settings.xml配置文件里activation元素的说明）。格式是<name>value</name>。 -->
     <properties>
         <springfox.version>3.0.0</springfox.version>
         <spring-cloud.version>Hoxton.SR9</spring-cloud.version>
@@ -136,6 +141,7 @@
         </dependencies>
     </dependencyManagement>
 
+    <!-- 构建项目需要的信息 -->
     <build>
         <plugins>
             <plugin>
