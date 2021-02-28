@@ -32,30 +32,21 @@ import java.io.IOException;
 @RequestMapping("/oauth/qq")
 public class QQController {
 
-    @ApiOperation(value = "QQ登录回调", notes = "QQ登录成功后，QQ互联的回调地址")
-    @ResponseBody
-    @GetMapping("/fallback")
-    public String fallback () {
-        log.info("qq 请求 /oauth/qq/fallback");
-        return "hello world";
-    }
-
     @ApiOperation(value = "QQ互联登录", notes = "")
     @GetMapping("/login")
     public void login (HttpServletRequest request, HttpServletResponse response) throws QQConnectException, IOException {
         response.sendRedirect(new Oauth().getAuthorizeURL(request));
     }
 
-    @ApiOperation(value = "登录后")
-    @PostMapping("/after-login")
-    public void afterLogin(HttpServletRequest request, HttpServletResponse response) {
+    @ApiOperation(value = "QQ登录回调", notes = "QQ登录成功后，QQ互联的回调地址")
+    @GetMapping("/fallback")
+    public void fallback(HttpServletRequest request, HttpServletResponse response) {
         try {
             AccessToken accessTokenObj = (new Oauth()).getAccessTokenByRequest(request);
-            String accessToken   = null,
-                    openID        = null;
+            String accessToken = null, openID = null;
             long tokenExpireIn = 0L;
             if (accessTokenObj.getAccessToken().equals("")) {
-                System.out.print("没有获取到响应参数");
+                log.info("com.goudong.oauth2.qq.QQController.afterLogin -- 没有获取到响应参数");
             }else{
                 accessToken = accessTokenObj.getAccessToken();
                 tokenExpireIn = accessTokenObj.getExpireIn();
@@ -64,6 +55,7 @@ public class QQController {
                 UserInfo qzoneUserInfo = new UserInfo(accessToken, openID);
                 UserInfoBean userInfoBean = qzoneUserInfo.getUserInfo();
 
+                log.info("com.goudong.oauth2.qq.QQController.afterLogin -- UserInfoBean:\n{}", userInfoBean);
                 HttpSession session=request.getSession();
                 session.setAttribute("name", userInfoBean.getNickname());
                 session.setAttribute("avatar", userInfoBean.getAvatar().getAvatarURL30());

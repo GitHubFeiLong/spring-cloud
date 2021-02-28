@@ -28,7 +28,7 @@ import java.util.LinkedHashSet;
 public class Swagger3Config {
 
     @Bean
-    public Docket docket() {
+    public Docket qqDocket() {
         ApiInfo apiInfo = new ApiInfoBuilder()
                 .title("QQ模块")
                 .description("qq相关的认证")
@@ -54,7 +54,7 @@ public class Swagger3Config {
     }
 
     @Bean
-    public Docket docket1() {
+    public Docket weChatDocket() {
         ApiInfo apiInfo =  new ApiInfoBuilder()
                 .title("WeChat")
                 .description("微信OAuth")
@@ -65,7 +65,7 @@ public class Swagger3Config {
                 .enable(true)
                 .apiInfo(apiInfo)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.goudong.oauth2"))
+                .apis(RequestHandlerSelectors.basePackage("com.goudong.oauth2.wechat"))
                 .paths(PathSelectors.any())
                 .build()
                 // 支持的通讯协议集合
