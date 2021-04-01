@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goudong.user.dao.UserDao">
+
+    <select id="findAllMenuUrl" resultType="java.lang.String">
+        select url from authority_menu
+    </select>
+
+    <select id="findRoleNameByMenuUrl" resultType="java.lang.String">
+        select
+            ar.role_name
+        from authority_menu am
+        inner join authority_role_menu arm on am.id=arm.menu_id
+        inner join authority_role ar on arm.role_id = ar.id
+        where am.url = #{url}
+    </select>
+</mapper>

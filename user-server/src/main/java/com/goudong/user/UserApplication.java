@@ -14,14 +14,12 @@ import springfox.documentation.oas.annotations.EnableOpenApi;
  * @Date 2021/2/9 16:56
  * @Version 1.0
  */
-// 激活eurekaClient
-//@EnableEurekaClient
 // 开启OpenApi(Swagger)
 @EnableOpenApi
 @SpringBootApplication()
 // 开启事务管理
 @EnableTransactionManagement
-@MapperScan(basePackages = {"com.goudong.dao"}) // 可以不在mapper层添加注解
+@MapperScan(basePackages = {"com.goudong.user.dao"}) // 可以不在mapper层添加注解
 public class UserApplication {
     public static void main(String[] args) {
         SpringApplication.run(UserApplication.class, args);

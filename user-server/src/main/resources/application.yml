@@ -1,10 +1,11 @@
 server:
   port: 8001
 spring:
-#  security:
-#    user:
-#      name: user #设置默认登录用户名
-#      password: soft01 #设置默认登录密码 不设置会在控制台打印出，默认用户名是user
+  security:
+    user:
+      name: admin #设置默认登录用户名
+      #设置默认登录密码 不设置会在控制台打印出，默认用户名是user
+      password: admin
   application:
     name: user-server
   datasource:
@@ -21,7 +22,7 @@ spring:
     maxIdleTime: 60
 ## mybatis配置
 mybatis:
-  mapper-locations: classpath:com/goudong/dao/*.xml
+  mapper-locations: classpath:dao/*.xml
   #  type-aliases-package: com.example.entity
   configuration:
     #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 输出sql语句
