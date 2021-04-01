@@ -19,7 +19,7 @@ import java.io.IOException;
 @Component
 public class UrlAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
-    @Resource
+//    @Resource
 //    private UserService userService;
 
     @Override

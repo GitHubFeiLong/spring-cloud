@@ -1,6 +1,10 @@
 server:
   port: 8001
 spring:
+#  security:
+#    user:
+#      name: user #设置默认登录用户名
+#      password: soft01 #设置默认登录密码 不设置会在控制台打印出，默认用户名是user
   application:
     name: user-server
   datasource:
