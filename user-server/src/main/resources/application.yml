@@ -4,7 +4,7 @@ spring:
   application:
     name: user-server
   datasource:
-    url: jdbc:mysql://47.108.31.41:3306/jd?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    url: jdbc:mysql://127.0.0.1:3306/security?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
     username: root
     password: l(=8gp_04h*&
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -28,11 +28,3 @@ mybatis:
     reasonable: true
     supportMethodsArguments: true
     params: count=countSql
-
-# ===== 自定义swagger配置 ===== #
-swagger:
-  enable: true
-  application-name: ${spring.application.name}
-  application-version: 1.0
-  application-description: springfox swagger 3.0整合Demo
-  try-host: http://localhost:${server.port}

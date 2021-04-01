@@ -18,7 +18,7 @@ import springfox.documentation.oas.annotations.EnableOpenApi;
 //@EnableEurekaClient
 // 开启OpenApi(Swagger)
 @EnableOpenApi
-@SpringBootApplication
+@SpringBootApplication()
 // 开启事务管理
 @EnableTransactionManagement
 @MapperScan(basePackages = {"com.goudong.dao"}) // 可以不在mapper层添加注解
