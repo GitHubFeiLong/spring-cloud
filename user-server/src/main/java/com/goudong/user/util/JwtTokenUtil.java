@@ -1,0 +1,98 @@
+package com.goudong.user.util;
+
+import com.alibaba.fastjson.JSON;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.Map;
+
+/**
+ * 类描述：
+ *
+ * @ClassName TokenUtil
+ * @Author msi
+ * @Date 2020/6/12 19:57
+ * @Version 1.0
+ */
+@Slf4j
+public class JwtTokenUtil {
+    /**
+     * 请求携带的请求头
+     */
+    public static final String TOKEN_HEADER = "Authorization";
+    /**
+     * token字符串前缀
+     */
+    public static final String TOKEN_PREFIX = "Bearer ";
+
+    /**
+     * 作者
+     */
+    public static final String ISSUER = "cfl";
+    /**
+     * 有效时长单位小时
+     */
+    public static final int VALID_HOUR = 2;
+
+    /**
+     * 生产token的盐
+     */
+    public static final String SALT = "qaqababa";
+
+    @Autowired
+    public HttpServletRequest httpServletRequest;
+
+    /**
+     * 生产token字符串
+     * 将用户的基本信息、权限信息、能访问的菜单信息存储到token中
+     * @param userDetails 用户登录信息
+     * @return
+     */
+    public static String generateToken (Map<String, Object> userDetails) {
+        Algorithm algorithm = Algorithm.HMAC256(JwtTokenUtil.SALT); // secret 密钥，只有服务器知道
+        // 当前时间
+        LocalDateTime ldt = LocalDateTime.now();
+
+        return JWT.create()
+                .withIssuer(JwtTokenUtil.ISSUER) // 发布者
+                .withIssuedAt(new Date()) // 生成签名的时间
+                .withExpiresAt(Date.from(ldt.plusHours(JwtTokenUtil.VALID_HOUR).atZone(ZoneId.systemDefault()).toInstant())) // 2 小时有效
+                // 插入数据，这里只插入了用户名和密码 可以继续添加
+                .withAudience(JSON.toJSONString(userDetails))
+                .sign(algorithm);
+    }
+
+    /**
+     * 解析token字符串
+     * @param token 需要被解析的字符串
+     */
+    public static void resolveToken(String token) {
+
+        Algorithm algorithm = Algorithm.HMAC256(JwtTokenUtil.SALT);
+        JWTVerifier verifier = JWT.require(algorithm)
+                .withIssuer(JwtTokenUtil.ISSUER) //匹配指定的token发布者
+                .build();
+        DecodedJWT jwt = verifier.verify(token);
+        String result = jwt.getAudience().get(0);
+        log.info("result:{}",result);
+    }
+
+    // 从token中获取用户名
+//    public static String getUsername(String token){
+//        return getTokenBody(token).getSubject();
+//    }
+//
+//    // 是否已过期
+//    public static boolean isExpiration(String token){
+//        return getTokenBody(token).getExpiration().before(new Date());
+//    }
+
+}

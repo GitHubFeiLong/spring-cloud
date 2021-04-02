@@ -38,9 +38,12 @@ public class SelfFilterInvocationSecurityMetadataSource implements FilterInvocat
         // 获取请求地址
         String requestUrl = ((FilterInvocation) o).getRequestUrl();
         log.info("requestUrl >> {}", requestUrl);
+        // 查询所有菜单的路径
         List<String> menuUrl = userService.findAllMenuUrl();
         for (String url : menuUrl) {
+            // 当前访问的地址和菜单地址匹配
             if (antPathMatcher.match(url, requestUrl)) {
+                // 查询访问当前地址需要的权限
                 List<String> roleNames = userService.findRoleNameByMenuUrl(url); //当前请求需要的权限
                 roleNames.forEach(roleName -> {
                     SecurityConfig securityConfig = new SecurityConfig(roleName);

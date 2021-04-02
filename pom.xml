@@ -40,6 +40,8 @@
         <!--记录：在 dependencyManagement中不写版本号，子模块依赖报错-->
         <spring-web.version>2.4.2</spring-web.version>
         <fast-json.version>1.2.75</fast-json.version>
+        <jjwt.version>0.9.1</jjwt.version>
+        <java-jwt.version>3.14.0</java-jwt.version>
     </properties>
 
     <!--依赖写入dependencies下，子模块不需要引入就能使用-->
@@ -90,22 +92,22 @@
                 </exclusions>
             </dependency>
             <!--测试需要的包-->
-<!--            <dependency>-->
-<!--                <groupId>junit</groupId>-->
-<!--                <artifactId>junit</artifactId>-->
-<!--                <scope>test</scope>-->
-<!--            </dependency>-->
-<!--            <dependency>-->
-<!--                <groupId>org.springframework.boot</groupId>-->
-<!--                <artifactId>spring-boot-starter-test</artifactId>-->
-<!--                <scope>test</scope>-->
-<!--                <exclusions>-->
-<!--                    <exclusion>-->
-<!--                        <groupId>org.junit.vintage</groupId>-->
-<!--                        <artifactId>junit-vintage-engine</artifactId>-->
-<!--                    </exclusion>-->
-<!--                </exclusions>-->
-<!--            </dependency>-->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <scope>test</scope>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.junit.vintage</groupId>
+                        <artifactId>junit-vintage-engine</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
 
             <!--mysql-->
             <dependency>
@@ -125,6 +127,17 @@
                 <artifactId>spring-boot-starter-data-mongodb</artifactId>
                 <version>${spring-boot.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-security</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security.oauth</groupId>
+                <artifactId>spring-security-oauth2</artifactId>
+                <version>2.4.0.RELEASE</version>
+            </dependency>
+
             <!--分页插件-->
             <dependency>
                 <groupId>com.github.pagehelper</groupId>
@@ -150,6 +163,19 @@
                 <artifactId>fastjson</artifactId>
                 <version>${fast-json.version}</version>
             </dependency>
+            <!-- jjwt -->
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jjwt.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.auth0/java-jwt -->
+            <dependency>
+                <groupId>com.auth0</groupId>
+                <artifactId>java-jwt</artifactId>
+                <version>${java-jwt.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

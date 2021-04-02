@@ -1,8 +1,10 @@
 package com.goudong.user.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.goudong.module.pojo.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,5 +26,16 @@ public class UserController {
         log.info("haha");
         JSON.toJSONString("hello");
         return "hello world";
+    }
+
+    @PostMapping("/nonceLogin")
+    public Result login (String username, String password) {
+
+        return Result.ofSuccess();
+    }
+
+    @PostMapping("/nonceLogout")
+    public Result logout () {
+        return Result.ofSuccess();
     }
 }

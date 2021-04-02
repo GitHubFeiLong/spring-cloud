@@ -50,6 +50,7 @@ public class SelfAccessDecisionManager implements AccessDecisionManager {
                 }
             }
         }
+        // 无权访问该路径
         throw new AccessDeniedException("SimpleGrantedAuthority!!");
     }
 
