@@ -1,14 +1,9 @@
 server:
   port: 8001
 spring:
-  security:
-    user:
-      name: admin #设置默认登录用户名
-      #设置默认登录密码 不设置会在控制台打印出，默认用户名是user
-      password: admin
   application:
     name: user-server
-  datasource:
+  datasource: #数据库
     url: jdbc:mysql://127.0.0.1:3306/security?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
     username: root
     password: l(=8gp_04h*&
@@ -20,12 +15,18 @@ spring:
     loginTimeout: 30
     mainteanceInterval: 60
     maxIdleTime: 60
+  flyway: ## flyway数据迁移
+    #是否开启
+    enabled: true
+    locations: classpath:db/migration #迁移脚本的位置，默认db/migration
+    baseline-on-migrate: true
+    table: flyway_schema_history # 记录历史记录的表名称
+    out-of-order: false
 ## mybatis配置
 mybatis:
   mapper-locations: classpath:dao/*.xml
-  #  type-aliases-package: com.example.entity
   configuration:
-    #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 输出sql语句
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 输出sql语句
     map-underscore-to-camel-case: true #开启驼峰命名转换
   # mybatis使用分页插件
   pagehelper:

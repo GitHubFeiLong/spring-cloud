@@ -1,5 +1,7 @@
 package com.goudong.user.service;
 
+import com.goudong.user.entity.AuthorityUserDO;
+
 import java.util.List;
 import java.util.Map;
 
@@ -47,4 +49,11 @@ public interface UserService {
      * @return
      */
     Map<String,Object> findMenuInfoByUsername(String username);
+
+    /**
+     * 用户名查询用户的角色
+     * @param username
+     * @return
+     */
+    AuthorityUserDO findUserRoleInfoByUsername (String username);
 }

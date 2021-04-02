@@ -1,4 +1,4 @@
-package com.goudong.user.config;
+package com.goudong.user.handler;
 
 import com.alibaba.fastjson.JSON;
 import com.goudong.module.enumerate.ClientExceptionEnum;

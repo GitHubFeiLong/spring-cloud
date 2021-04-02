@@ -1,8 +1,11 @@
-package com.goudong.user.config;
+package com.goudong.user.filter;
 
+import com.goudong.user.entity.AuthorityRoleDO;
+import com.goudong.user.entity.AuthorityUserDO;
 import com.goudong.user.util.JwtTokenUtil;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
@@ -11,7 +14,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * 使用JWT token进行验证用户
@@ -40,10 +45,24 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
     // 这里从token中获取用户信息并新建一个token
     private UsernamePasswordAuthenticationToken getAuthentication(String tokenHeader) {
+        // 去掉前面的 "Bearer " 字符串
         String token = tokenHeader.replace(JwtTokenUtil.TOKEN_PREFIX, "");
-        String username = "admin";
+        // 解析token为对象
+        AuthorityUserDO authorityUserDO = JwtTokenUtil.resolveToken(token);
+
+        // 放置权限
+        Set<SimpleGrantedAuthority> authoritiesSet = new HashSet<>();
+        List<AuthorityRoleDO> authorityRoleDOS = authorityUserDO.getAuthorityRoleDOS();
+        if (authorityRoleDOS != null && !authorityRoleDOS.isEmpty()) {
+            authorityRoleDOS.parallelStream().forEach(f1->{
+                SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(f1.getRoleName());
+                authoritiesSet.add(simpleGrantedAuthority);
+            });
+
+        }
+        String username = authorityUserDO.getUsername();
         if (username != null){
-            return new UsernamePasswordAuthenticationToken(username, null, new ArrayList<>());
+            return new UsernamePasswordAuthenticationToken(username, null, authoritiesSet);
         }
         return null;
     }

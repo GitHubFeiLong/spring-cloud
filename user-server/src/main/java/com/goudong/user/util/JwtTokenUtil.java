@@ -5,6 +5,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.goudong.user.entity.AuthorityUserDO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
-import java.util.Map;
 
 /**
  * 类描述：
@@ -53,10 +53,10 @@ public class JwtTokenUtil {
     /**
      * 生产token字符串
      * 将用户的基本信息、权限信息、能访问的菜单信息存储到token中
-     * @param userDetails 用户登录信息
+     * @param authorityUserDO 用户登录信息
      * @return
      */
-    public static String generateToken (Map<String, Object> userDetails) {
+    public static String generateToken (AuthorityUserDO authorityUserDO) {
         Algorithm algorithm = Algorithm.HMAC256(JwtTokenUtil.SALT); // secret 密钥，只有服务器知道
         // 当前时间
         LocalDateTime ldt = LocalDateTime.now();
@@ -66,7 +66,7 @@ public class JwtTokenUtil {
                 .withIssuedAt(new Date()) // 生成签名的时间
                 .withExpiresAt(Date.from(ldt.plusHours(JwtTokenUtil.VALID_HOUR).atZone(ZoneId.systemDefault()).toInstant())) // 2 小时有效
                 // 插入数据，这里只插入了用户名和密码 可以继续添加
-                .withAudience(JSON.toJSONString(userDetails))
+                .withAudience(JSON.toJSONString(authorityUserDO))
                 .sign(algorithm);
     }
 
@@ -74,7 +74,7 @@ public class JwtTokenUtil {
      * 解析token字符串
      * @param token 需要被解析的字符串
      */
-    public static void resolveToken(String token) {
+    public static AuthorityUserDO resolveToken(String token) {
 
         Algorithm algorithm = Algorithm.HMAC256(JwtTokenUtil.SALT);
         JWTVerifier verifier = JWT.require(algorithm)
@@ -83,6 +83,7 @@ public class JwtTokenUtil {
         DecodedJWT jwt = verifier.verify(token);
         String result = jwt.getAudience().get(0);
         log.info("result:{}",result);
+        return JSON.parseObject(result, AuthorityUserDO.class);
     }
 
     // 从token中获取用户名

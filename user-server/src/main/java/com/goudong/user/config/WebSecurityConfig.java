@@ -1,5 +1,10 @@
 package com.goudong.user.config;
 
+import com.goudong.user.filter.JWTAuthorizationFilter;
+import com.goudong.user.handler.UrlAccessDeniedHandler;
+import com.goudong.user.handler.UrlAuthenticationFailureHandler;
+import com.goudong.user.handler.UrlAuthenticationSuccessHandler;
+import com.goudong.user.handler.UrlLogoutSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationDetailsSource;

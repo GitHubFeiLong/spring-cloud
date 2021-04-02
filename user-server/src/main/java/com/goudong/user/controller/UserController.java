@@ -27,15 +27,4 @@ public class UserController {
         JSON.toJSONString("hello");
         return "hello world";
     }
-
-    @PostMapping("/nonceLogin")
-    public Result login (String username, String password) {
-
-        return Result.ofSuccess();
-    }
-
-    @PostMapping("/nonceLogout")
-    public Result logout () {
-        return Result.ofSuccess();
-    }
 }

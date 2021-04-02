@@ -1,4 +1,4 @@
-package com.goudong.user.config;
+package com.goudong.user.entity;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,8 +15,17 @@ import java.util.Set;
  */
 public class SelfUserDetails implements UserDetails, Serializable {
 
+    /**
+     * 用户名
+     */
     private String username;
+    /**
+     * 密码
+     */
     private String password;
+    /**
+     * 角色
+     */
     private Set<? extends GrantedAuthority> authorities;
 
     public SelfUserDetails() {

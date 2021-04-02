@@ -10,9 +10,9 @@ import lombok.Data;
 @Data
 public class AuthorityRoleDO {
     private Integer id;
-    private String role_name;
-    private String role_name_CN;
-    private String update_time;
+    private String roleName;
+    private String roleNameCN;
+    private String updateTime;
     private String remark;
 
 }

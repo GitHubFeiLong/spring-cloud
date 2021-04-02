@@ -1,6 +1,6 @@
 package com.goudong.user.service.impl;
 
-import com.goudong.user.config.SelfUserDetails;
+import com.goudong.user.entity.SelfUserDetails;
 import com.goudong.user.service.UserService;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

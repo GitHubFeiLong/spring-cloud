@@ -71,10 +71,39 @@
         AND parent_id=#{menuId}
     </select>
     <resultMap id="findUserRoleInfoByUsernameResultMap" type="com.goudong.user.entity.AuthorityUserDO">
+        <result column="auId" property="id"></result>
+        <result column="username" property="username"></result>
+        <result column="password" property="password"></result>
+        <result column="email" property="email"></result>
+        <result column="valid_time" property="validTime"></result>
+        <result column="update_time" property="updateTime"></result>
+        <result column="remark" property="remark"></result>
+        <result column="nickname" property="nickname"></result>
+        <collection property="authorityRoleDOS" ofType="com.goudong.user.entity.AuthorityRoleDO">
+            <result column="arId" property="id"></result>
+            <result column="role_name" property="roleName"></result>
+            <result column="role_name_CN" property="roleNameCN"></result>
+        </collection>
 
     </resultMap>
-    <select id="findUserRoleInfoByUsername" resultType="com.goudong.user.entity.AuthorityUserDO">
-
+    <select id="findUserRoleInfoByUsername" resultMap="findUserRoleInfoByUsernameResultMap">
+        select
+            au.id auId,
+            au.username,
+            au.password,
+            au.email,
+            au.phone,
+            au.valid_time,
+            au.update_time,
+            au.remark,
+            au.nickname,
+            ar.id arId,
+            ar.role_name,
+            ar.role_name_CN
+        from authority_user au
+        inner join authority_user_role aur on au.id=aur.user_id
+        inner join authority_role ar on ar.id=aur.role_id
+        where au.username=#{username}
     </select>
 
 </mapper>

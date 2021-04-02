@@ -34,12 +34,6 @@ public class SelfAuthenticationProvider implements AuthenticationProvider {
         log.info("authentication >> {}", JSONObject.toJSONString(authentication, SerializerFeature.WriteMapNullValue));
         // 登录请求中的其他参数
         CustomWebAuthenticationDetails customWebAuthenticationDetails = (CustomWebAuthenticationDetails) authentication.getDetails(); //获取身份验证详细信息
-//        String remoteAddress = customWebAuthenticationDetails.getRemoteAddress();
-//        String sessionId = customWebAuthenticationDetails.getSessionId();
-//        System.out.println("remoteAddress >> " + remoteAddress);
-//        System.out.println("sessionId >> " + sessionId);
-//        System.out.println("details >> " + JSONObject.toJSONString(customWebAuthenticationDetails, SerializerFeature.WriteMapNullValue));
-        System.out.println("macAddress >> " + customWebAuthenticationDetails.getMacAddress()); //用于校验mac地址白名单(这里只是打个比方，登录验证中增加的额外字段)
 
         String username = (String) authentication.getPrincipal(); //表单输入的用户名
         String password = (String) authentication.getCredentials(); //表单输入的密码
