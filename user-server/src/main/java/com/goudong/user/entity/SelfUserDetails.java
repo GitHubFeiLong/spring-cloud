@@ -23,10 +23,14 @@ public class SelfUserDetails implements UserDetails, Serializable {
      * 密码
      */
     private String password;
+    private String phone;
+    private String email;
     /**
      * 角色
      */
     private Set<? extends GrantedAuthority> authorities;
+
+
 
     public SelfUserDetails() {
     }
@@ -52,6 +56,22 @@ public class SelfUserDetails implements UserDetails, Serializable {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override

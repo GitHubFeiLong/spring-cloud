@@ -1,13 +1,13 @@
 package com.goudong.user.service.impl;
 
+import com.goudong.user.dao.AuthorityUserDao;
+import com.goudong.user.entity.AuthorityUserDO;
 import com.goudong.user.entity.SelfUserDetails;
-import com.goudong.user.service.UserService;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
 import java.util.HashSet;
@@ -24,29 +24,37 @@ import java.util.Set;
 public class SelfUserDetailsService implements UserDetailsService {
 
     @Resource
-    private UserService userService;
+    private AuthorityUserDao authorityUserDao;
 
+    /**
+     * 根据用户登录名查询用户信息
+     * @param username 用户名/手机号/邮箱
+     * @return
+     * @throws UsernameNotFoundException
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         SelfUserDetails userInfo = new SelfUserDetails();
-        userInfo.setUsername(username); //任意登录用户名
-        // 查询用户的密码
-        String password = userService.findPasswordByUsernameAfterValidTime(username);
-        if (ObjectUtils.isEmpty(password)) {
-            throw new UsernameNotFoundException("User name" + username + "not find!!");
+        // 查询用户信息
+        AuthorityUserDO user = authorityUserDao.selectUserByUsername(username);
+        if (user != null) {
+            userInfo.setUsername(user.getUsername());
+            userInfo.setPassword(user.getPassword());
+        } else {
+            throw new UsernameNotFoundException("用户:" + username + "不存在");
         }
-        userInfo.setPassword(password); //从数据库获取密码
 
         Set<SimpleGrantedAuthority> authoritiesSet = new HashSet<>();
         // 查询用户权限
-        List<String> roles = userService.findRoleNameByUsername(username);
+        List<String> roles = authorityUserDao.selectRoleNameByUserUuid(user.getUuid());
         for (String roleName : roles) {
             SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(roleName); //用户拥有的角色
             authoritiesSet.add(simpleGrantedAuthority);
         }
+        // 设置用户的角色
         userInfo.setAuthorities(authoritiesSet);
-
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return userInfo;
     }
 }

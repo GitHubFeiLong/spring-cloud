@@ -38,9 +38,8 @@ public class SelfAccessDecisionManager implements AccessDecisionManager {
             if ("ROLE_LOGIN".equals(needRole)) {
                 if (authentication instanceof AnonymousAuthenticationToken) {
                     throw new BadCredentialsException("Not logged in!!");
-                } else {
-                    return;
                 }
+                return;
             }
             // 当前用户所具有的权限
             for (GrantedAuthority grantedAuthority : authorities) {

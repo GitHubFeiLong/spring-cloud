@@ -1,5 +1,6 @@
 package com.goudong.user.config;
 
+import lombok.Getter;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,9 +12,16 @@ import java.io.Serializable;
  * <p>
  * 自定义web身份验证详细信息(用于登录验证中增加额外参数)
  */
-class CustomWebAuthenticationDetails extends WebAuthenticationDetails implements Serializable {
-
-    private String macAddress;
+@Getter
+public class CustomWebAuthenticationDetails extends WebAuthenticationDetails implements Serializable {
+    /**
+     * 电话
+     */
+    private String phone;
+    /**
+     * 邮箱
+     */
+    private String email;
 
     CustomWebAuthenticationDetails(HttpServletRequest httpServletRequest) {
         super(httpServletRequest);
@@ -23,10 +31,8 @@ class CustomWebAuthenticationDetails extends WebAuthenticationDetails implements
 //            String header = httpServletRequest.getHeader(s);
 //            System.out.println(s + ": " + header);
 //        }
-        macAddress = httpServletRequest.getParameter("macAddress");
+        phone = httpServletRequest.getParameter("phone");
+        email = httpServletRequest.getParameter("email");
     }
 
-    String getMacAddress() {
-        return macAddress;
-    }
 }

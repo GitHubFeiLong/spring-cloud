@@ -17,7 +17,7 @@ spring:
     maxIdleTime: 60
   flyway: ## flyway数据迁移
     #是否开启
-    enabled: true
+    enabled: false
     locations: classpath:db/migration #迁移脚本的位置，默认db/migration
     baseline-on-migrate: true
     table: flyway_schema_history # 记录历史记录的表名称

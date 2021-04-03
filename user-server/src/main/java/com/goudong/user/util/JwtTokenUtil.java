@@ -25,6 +25,14 @@ import java.util.Date;
 @Slf4j
 public class JwtTokenUtil {
     /**
+     * 短期token的响应头
+     */
+    public static final String TOKEN = "token";
+    /**
+     * 长期token的响应头
+     */
+    public static final String REFRESH_TOKEN = "refreshToken";
+    /**
      * 请求携带的请求头
      */
     public static final String TOKEN_HEADER = "Authorization";
@@ -38,9 +46,13 @@ public class JwtTokenUtil {
      */
     public static final String ISSUER = "cfl";
     /**
-     * 有效时长单位小时
+     * 短期有效时长单位小时
      */
-    public static final int VALID_HOUR = 2;
+    public static final int VALID_SHORT_TERM_HOUR = 2;
+    /**
+     * 长期有效时长单位小时
+     */
+    public static final int VALID_LONG_TERM_HOUR = 24*7;
 
     /**
      * 生产token的盐
@@ -51,24 +63,29 @@ public class JwtTokenUtil {
     public HttpServletRequest httpServletRequest;
 
     /**
-     * 生产token字符串
+     * 生产短期的token字符串
      * 将用户的基本信息、权限信息、能访问的菜单信息存储到token中
      * @param authorityUserDO 用户登录信息
      * @return
      */
-    public static String generateToken (AuthorityUserDO authorityUserDO) {
+    public static String generateToken (AuthorityUserDO authorityUserDO, int hour) {
         Algorithm algorithm = Algorithm.HMAC256(JwtTokenUtil.SALT); // secret 密钥，只有服务器知道
         // 当前时间
         LocalDateTime ldt = LocalDateTime.now();
 
         return JWT.create()
-                .withIssuer(JwtTokenUtil.ISSUER) // 发布者
-                .withIssuedAt(new Date()) // 生成签名的时间
-                .withExpiresAt(Date.from(ldt.plusHours(JwtTokenUtil.VALID_HOUR).atZone(ZoneId.systemDefault()).toInstant())) // 2 小时有效
-                // 插入数据，这里只插入了用户名和密码 可以继续添加
+                // 发布者
+                .withIssuer(JwtTokenUtil.ISSUER)
+                // 生成签名的时间
+                .withIssuedAt(new Date())
+                // 有效时长
+                .withExpiresAt(Date.from(ldt.plusHours(hour).atZone(ZoneId.systemDefault()).toInstant()))
+                // 绑定用户数据
                 .withAudience(JSON.toJSONString(authorityUserDO))
                 .sign(algorithm);
     }
+
+
 
     /**
      * 解析token字符串

@@ -19,7 +19,14 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * 类描述：
+ * 过滤器，用户请求时，获取请求头的token，并将其解析后设置到Authentication认证信息中去
  * 使用JWT token进行验证用户
+ * @ClassName JWTAuthorizationFilter
+ * @Description TODO
+ * @Author msi
+ * @Date 2021-04-03 18:14
+ * @Version 1.0
  */
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
@@ -43,7 +50,11 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         super.doFilterInternal(request, response, chain);
     }
 
-    // 这里从token中获取用户信息并新建一个token
+    /**
+     * 这里从token中获取用户信息，并将用户名和角色信息，创建一个认证对象 Authentication
+     * @param tokenHeader token
+     * @return
+     */
     private UsernamePasswordAuthenticationToken getAuthentication(String tokenHeader) {
         // 去掉前面的 "Bearer " 字符串
         String token = tokenHeader.replace(JwtTokenUtil.TOKEN_PREFIX, "");
@@ -62,6 +73,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         }
         String username = authorityUserDO.getUsername();
         if (username != null){
+            // 用户名 密码 角色
             return new UsernamePasswordAuthenticationToken(username, null, authoritiesSet);
         }
         return null;

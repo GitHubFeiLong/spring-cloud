@@ -1,4 +1,4 @@
-package com.goudong.user.config;
+package com.goudong.user.handler;
 
 import com.alibaba.fastjson.JSON;
 import com.goudong.module.enumerate.ClientExceptionEnum;
@@ -14,10 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * @author Andon
- * @date 2019/3/20
- * <p>
+ * 类描述：
  * 自定义未登录时：返回状态码401
+ * @Author msi
+ * @Date 2021-04-03 9:01
+ * @Version 1.0
  */
 @SuppressWarnings("Duplicates")
 @Component

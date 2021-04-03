@@ -1,6 +1,7 @@
 package com.goudong.user.config;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -22,7 +23,7 @@ import java.util.LinkedHashSet;
  * @Date 2020/10/17 10:00
  * @Version 1.0
  */
-//@Configuration
+@Configuration
 public class Swagger3Config {
 
     @Bean
@@ -40,7 +41,7 @@ public class Swagger3Config {
                 .select()
                 // 全部扫描
                 //.apis(RequestHandlerSelectors.any())
-                .apis(RequestHandlerSelectors.basePackage("com.goudong.user"))
+                .apis(RequestHandlerSelectors.basePackage("com.goudong.user.controller"))
                 .paths(PathSelectors.any())
                 .build()
                 // 支持的通讯协议集合

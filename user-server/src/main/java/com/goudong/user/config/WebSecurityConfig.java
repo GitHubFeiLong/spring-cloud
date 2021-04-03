@@ -1,12 +1,12 @@
 package com.goudong.user.config;
 
+import com.goudong.user.dao.AuthorityIgnoreResourceDao;
+import com.goudong.user.entity.AuthorityIgnoreResourceDO;
 import com.goudong.user.filter.JWTAuthorizationFilter;
-import com.goudong.user.handler.UrlAccessDeniedHandler;
-import com.goudong.user.handler.UrlAuthenticationFailureHandler;
-import com.goudong.user.handler.UrlAuthenticationSuccessHandler;
-import com.goudong.user.handler.UrlLogoutSuccessHandler;
+import com.goudong.user.handler.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -18,9 +18,12 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
+import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * 类描述：
@@ -61,14 +64,33 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Resource
     private AuthenticationDetailsSource<HttpServletRequest, WebAuthenticationDetails> authenticationDetailsSource; //身份验证详细信息源
 
+    @Resource
+    private AuthorityIgnoreResourceDao authorityIgnoreResourceDao;
+
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder(){
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * 放行资源
+     * @param web
+     */
     @Override
     public void configure(WebSecurity web) {
-//        web.ignoring().antMatchers("/api/user/hello"); //无条件允许访问
+        List<AuthorityIgnoreResourceDO> authorityIgnoreResourceDOS = authorityIgnoreResourceDao.selectAll();
+        if (!authorityIgnoreResourceDOS.isEmpty()) {
+            authorityIgnoreResourceDOS.stream()
+                    .filter(f->!f.getIsDelete())
+                    .forEach(p1->{
+                        // 数据库设置的该路径的请求方式用逗号进行分割
+                        String[] methods = p1.getMethod().split(",");
+                        Assert.isTrue(methods != null && methods.length > 0, "请求方式为空");
+                        Stream.of(methods).forEach(p2->{
+                            web.ignoring().antMatchers(HttpMethod.resolve(p2.toUpperCase()), p1.getUrl());
+                        });
+                    });
+        }
     }
 
     /**
@@ -126,6 +148,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutUrl("/nonceLogout") //自定义注销请求路径
                 .logoutSuccessHandler(logoutSuccessHandler); //注销成功处理器(前后端分离)：返回状态码200
 
+        // 添加Jwt过滤器
         http.addFilter(new JWTAuthorizationFilter(authenticationManager()));
     }
 

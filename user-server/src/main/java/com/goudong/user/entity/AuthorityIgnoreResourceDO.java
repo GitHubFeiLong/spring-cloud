@@ -7,19 +7,21 @@ import lombok.Data;
 import java.util.Date;
 
 /**
+ * 类描述：
+ * 不需要登录就能访问的资源
  * @Author msi
- * @Date 2021-04-02 13:49
+ * @Date 2021-04-03 20:19
  * @Version 1.0
  */
 @Data
 @ApiModel
-public class AuthorityRoleDO {
-    @ApiModelProperty(value = "角色表主键uuid")
+public class AuthorityIgnoreResourceDO {
+    @ApiModelProperty(value = "uuid")
     private String uuid;
-    @ApiModelProperty(value = "角色名称")
-    private String roleName;
-    @ApiModelProperty(value = "角色名称(中文)")
-    private String roleNameCN;
+    @ApiModelProperty(value = "资源路径")
+    private String url;
+    @ApiModelProperty(value = "访问资源的方法(多个用逗号分隔)")
+    private String method;
     @ApiModelProperty(value = "备注")
     private String remark;
     @ApiModelProperty(value = "是否被删除")
@@ -28,6 +30,5 @@ public class AuthorityRoleDO {
     private Date updateTime;
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
-
 
 }

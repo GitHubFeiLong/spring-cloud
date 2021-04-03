@@ -2,8 +2,8 @@ package com.goudong.user.handler;
 
 import com.alibaba.fastjson.JSON;
 import com.goudong.module.pojo.Result;
+import com.goudong.user.dao.AuthorityUserDao;
 import com.goudong.user.entity.AuthorityUserDO;
-import com.goudong.user.service.UserService;
 import com.goudong.user.util.JwtTokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -27,7 +27,7 @@ import java.io.IOException;
 public class UrlAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
     @Resource
-    private UserService userService;
+    private AuthorityUserDao authorityUserDao;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
@@ -36,19 +36,19 @@ public class UrlAuthenticationSuccessHandler implements AuthenticationSuccessHan
 
         //表单输入的用户名
         String username = (String) authentication.getPrincipal();
-//        Map<String, Object> userInfo = userService.findMenuInfoByUsername(username);
-        AuthorityUserDO userRoleInfoByUsername = userService.findUserRoleInfoByUsername(username);
+        // 查询用户信息
+        AuthorityUserDO authorityUserDO = authorityUserDao.selectUserDetailByUsername(username);
 
-        Result result = Result.ofSuccess(userRoleInfoByUsername);
-
-        // 生产token字符串
-        String token = JwtTokenUtil.generateToken(userRoleInfoByUsername);
-
-        AuthorityUserDO authorityUserDO = JwtTokenUtil.resolveToken(token);
+        // 短期有效
+        String shortToken = JwtTokenUtil.generateToken(authorityUserDO, JwtTokenUtil.VALID_SHORT_TERM_HOUR);
+        // 长期有效
+        String longToken = JwtTokenUtil.generateToken(authorityUserDO, JwtTokenUtil.VALID_LONG_TERM_HOUR);
 
         httpServletResponse.setCharacterEncoding("UTF-8");
         httpServletResponse.setContentType("text/html;charset=UTF-8");
-        httpServletResponse.getWriter().write(JSON.toJSONString(result));
-        httpServletResponse.setHeader("token", JwtTokenUtil.TOKEN_PREFIX + token);
+        httpServletResponse.getWriter().write(JSON.toJSONString(Result.ofSuccess(authorityUserDO)));
+        // 设置到响应头里
+        httpServletResponse.setHeader(JwtTokenUtil.TOKEN, JwtTokenUtil.TOKEN_PREFIX + shortToken);
+        httpServletResponse.setHeader(JwtTokenUtil.REFRESH_TOKEN, JwtTokenUtil.TOKEN_PREFIX + longToken);
     }
 }

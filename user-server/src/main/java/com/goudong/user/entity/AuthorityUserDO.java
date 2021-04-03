@@ -1,7 +1,14 @@
 package com.goudong.user.entity;
 
+import com.goudong.module.validated.Create;
+import com.goudong.module.validated.Update;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -11,15 +18,35 @@ import java.util.List;
  * @Version 1.0
  */
 @Data
+@ApiModel
 public class AuthorityUserDO {
-    private Integer id;
+    @ApiModelProperty(value = "用户表主键uuid")
+    private String uuid;
+
+    @NotBlank(message = "{username.empty}", groups = {Create.class, Update.class})
+    @ApiModelProperty(value = "用户名")
     private String username;
+    @NotBlank(message = "密码不能为空", groups = {Create.class, Update.class})
+    @ApiModelProperty(value = "密码")
     private String password;
+    @Email(message = "邮箱不能为空", groups = {Create.class, Update.class})
+    @ApiModelProperty(value = "邮箱")
     private String email;
+    @ApiModelProperty(value = "手机号")
     private String phone;
-    private String validTime;
-    private String updateTime;
-    private String remark;
+    @ApiModelProperty(value = "昵称")
     private String nickname;
+    @ApiModelProperty(value = "备注")
+    private String remark;
+    @ApiModelProperty(value = "有效时间")
+    private Date validTime;
+    @ApiModelProperty(value = "是否被删除")
+    private Boolean isDelete;
+    @ApiModelProperty(value = "更新时间")
+    private Date updateTime;
+    @ApiModelProperty(value = "创建时间")
+    private Date createTime;
+
+    @ApiModelProperty(value = "角色")
     private List<AuthorityRoleDO> authorityRoleDOS;
 }
