@@ -7,9 +7,9 @@
     <modelVersion>4.0.0</modelVersion>
     <!--子模块-->
     <modules>
-        <module>common</module>
-        <module>user-server</module>
-        <module>oauth2-server</module>
+        <module>goudong-common</module>
+        <module>goudong-user-server</module>
+        <module>goudong-oauth2-server</module>
     </modules>
 
     <!--springboot-->

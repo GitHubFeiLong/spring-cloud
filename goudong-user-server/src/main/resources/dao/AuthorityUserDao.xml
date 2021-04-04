@@ -77,7 +77,7 @@
         from authority_menu am
         inner join authority_role_menu arm on am.uuid = arm.menu_uuid
         inner join authority_role ar on ar.uuid = arm.role_uuid
-        where am.url = #{requestUrl} and am.method=#{requestMethod}
+        where am.url = #{requestUrl} and am.method like concat('%',#{requestMethod},'%')
         and am.is_delete = false and ar.is_delete = false
     </select>
 
