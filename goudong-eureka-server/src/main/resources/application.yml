@@ -7,7 +7,9 @@ eureka:
     register-with-eureka: false #是否将自己注册到注册中心
     fetch-registry: false #是否从eureka中获取注册信息
     service-url:
-      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/ # 单机Eureka服务
+      #defaultZone: http://host:9001/eureka/, http://host:9002/eureka/ # 集群Eureka服务
+
   server:
     enable-self-preservation: false #关闭自我保护机制
     eviction-interval-timer-in-ms: 5000 #测试使用，设置剔除的服务间隔单位ms

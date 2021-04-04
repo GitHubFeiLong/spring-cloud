@@ -8,11 +8,17 @@ import com.goudong.user.util.JwtTokenUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestOperations;
+import org.springframework.web.client.RestTemplate;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,6 +34,11 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
+
+
+
+    @Resource
+    private DiscoveryClient client;
 
     @GetMapping("/hello")
     public String hello () {
@@ -66,4 +77,26 @@ public class UserController {
         return Result.ofSuccess(map);
     }
 
+    @Resource
+    private RestOperations restTemplate;
+//    @Resource
+//    private RestTemplate restTemplate;
+
+    @GetMapping("/demo1")
+    public String demo1 () {
+        String url = "http://GOUDONG-OAUTH2-SERVER/oauth/we-chat/demo1";
+        return restTemplate.getForObject(url,String.class);
+    }
+
+    @GetMapping("/client")
+    public Object dis () {
+        List<String> list = client.getServices();
+        log.info("list >> {}", list);
+        List<ServiceInstance> srvList = client.getInstances("GOUDONG-USER-SERVER");
+        srvList.forEach(s -> {
+            log.info("serviceId:{}, houst:{}, port:{}, uri:{}",s.getServiceId(), s.getHost(),s.getPort(), s.getUri());
+        });
+
+        return this.client;
+    }
 }

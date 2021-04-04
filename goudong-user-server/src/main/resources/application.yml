@@ -86,10 +86,3 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:9000/eureka/ # 将服务注册到两个注册中心时用逗号隔开
-
-#actuator:
-#  info:
-#    app.name: goudong
-#    company.name: cfl
-#    build.artifactId: $project.artifactId$
-#    build.version: $project.version$

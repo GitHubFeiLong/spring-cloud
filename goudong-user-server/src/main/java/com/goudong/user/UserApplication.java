@@ -3,7 +3,7 @@ package com.goudong.user;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import springfox.documentation.oas.annotations.EnableOpenApi;
@@ -18,6 +18,7 @@ import springfox.documentation.oas.annotations.EnableOpenApi;
  */
 @EnableOpenApi // 开启OpenApi(Swagger)
 @EnableEurekaClient // 开启Eureka客户端
+@EnableDiscoveryClient // 启动服务发现
 @EnableTransactionManagement // 开启事务管理
 @SpringBootApplication()
 @MapperScan(basePackages = {"com.goudong.user.dao"}) // 可以不在mapper层添加注解
