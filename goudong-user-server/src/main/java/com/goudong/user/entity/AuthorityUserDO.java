@@ -5,6 +5,7 @@ import com.goudong.module.validated.Update;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -18,6 +19,7 @@ import java.util.List;
  * @Version 1.0
  */
 @Data
+@Accessors(chain = true)
 @ApiModel
 public class AuthorityUserDO {
     @ApiModelProperty(value = "用户表主键uuid")

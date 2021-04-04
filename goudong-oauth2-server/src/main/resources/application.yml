@@ -2,4 +2,4 @@ server:
   port: 8002
 spring:
   application:
-    name: oauth2-server
+    name: goudong-oauth2-server
