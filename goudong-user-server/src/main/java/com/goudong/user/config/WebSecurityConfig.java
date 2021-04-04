@@ -4,6 +4,7 @@ import com.goudong.user.dao.AuthorityIgnoreResourceDao;
 import com.goudong.user.entity.AuthorityIgnoreResourceDO;
 import com.goudong.user.filter.JWTAuthorizationFilter;
 import com.goudong.user.handler.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -34,6 +35,7 @@ import java.util.stream.Stream;
  * @Date 2020/12/29 22:40
  * @Version 1.0
  */
+@Slf4j
 @Configuration
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -91,6 +93,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         });
                     });
         }
+        log.info("ignore url >> {}", web.toString());
     }
 
     /**

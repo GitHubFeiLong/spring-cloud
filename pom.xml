@@ -10,6 +10,7 @@
         <module>goudong-common</module>
         <module>goudong-user-server</module>
         <module>goudong-oauth2-server</module>
+        <module>goudong-eureka-server</module>
     </modules>
 
     <!--springboot-->
@@ -34,7 +35,7 @@
         <!--记录：在 dependencyManagement中不写版本号，子模块依赖报错-->
         <spring-boot.version>2.4.2</spring-boot.version>
         <springfox.version>3.0.0</springfox.version>
-        <spring-cloud.version>Hoxton.SR9</spring-cloud.version>
+        <spring-cloud-dependencies.version>2020.0.2</spring-cloud-dependencies.version>
         <spring-security-oauth2.version>2.5.0.RELEASE</spring-security-oauth2.version>
         <mysql.version>8.0.16</mysql.version>
         <druid.version>1.2.5</druid.version>
@@ -43,6 +44,7 @@
         <fast-json.version>1.2.75</fast-json.version>
         <jjwt.version>0.9.1</jjwt.version>
         <java-jwt.version>3.14.0</java-jwt.version>
+        <springloaded.version>1.2.8.RELEASE</springloaded.version>
     </properties>
 
     <!--依赖写入dependencies下，子模块不需要引入就能使用-->
@@ -75,11 +77,20 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
+                <version>${spring-cloud-dependencies.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>springloaded</artifactId>
+                <version>${springloaded.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-devtools</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
             <!--web-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -147,6 +158,11 @@
                 <version>${spring-boot.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-actuator</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.springframework.security.oauth</groupId>
                 <artifactId>spring-security-oauth2</artifactId>
                 <version>${spring-security-oauth2.version}</version>
@@ -195,12 +211,32 @@
 
     <!-- 构建项目需要的信息 -->
     <build>
+        <!--父工程名称-->
+        <finalName>goudong</finalName>
+        <!--读取资源文件-->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <classifier>goudong</classifier>
+                </configuration>
+            </plugin>
+            <!--读取资源文件-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <delimiters>
+                        <!--$开头 $结尾 使用变量-->
+                        <delimit>$</delimit>
+                    </delimiters>
                 </configuration>
             </plugin>
         </plugins>
