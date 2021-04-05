@@ -10,15 +10,19 @@
         <module>goudong-common</module>
         <module>goudong-user-server</module>
         <module>goudong-oauth2-server</module>
-        <module>goudong-eureka-server</module>
+        <module>goudong-eureka-server7000</module>
+        <module>goudong-eureka-server7001</module>
+        <module>goudong-eureka-server7002</module>
+        <module>goudong-consumer-server</module>
+        <module>goudong-order-server</module>
+        <module>goudong-order-serverConsul81</module>
+        <module>goudong-order-serverOpenFeign82</module>
+        <module>goudong-payment-server8000</module>
+        <module>goudong-payment-server8001</module>
+        <module>goudong-payment-serverConsul8010</module>
     </modules>
 
-    <!--springboot-->
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.4.2</version>
-    </parent>
+
 
     <!--聚合工厂的gav-->
     <groupId>org.goudong</groupId>
@@ -33,9 +37,9 @@
     <!-- 以值替代名称，Properties可以在整个POM中使用，也可以作为触发条件（见settings.xml配置文件里activation元素的说明）。格式是<name>value</name>。 -->
     <properties>
         <!--记录：在 dependencyManagement中不写版本号，子模块依赖报错-->
-        <spring-boot.version>2.4.2</spring-boot.version>
+        <spring-boot.version>2.3.8.RELEASE</spring-boot.version>
         <springfox.version>3.0.0</springfox.version>
-        <spring-cloud-dependencies.version>2020.0.2</spring-cloud-dependencies.version>
+        <spring-cloud-dependencies.version>Hoxton.SR10</spring-cloud-dependencies.version>
         <spring-security-oauth2.version>2.5.0.RELEASE</spring-security-oauth2.version>
         <mysql.version>8.0.16</mysql.version>
         <druid.version>1.2.5</druid.version>
@@ -45,7 +49,14 @@
         <jjwt.version>0.9.1</jjwt.version>
         <java-jwt.version>3.14.0</java-jwt.version>
         <springloaded.version>1.2.8.RELEASE</springloaded.version>
+        <goudong-common.version>1.0-SNAPSHOT</goudong-common.version>
     </properties>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>${spring-boot.version}</version>
+    </parent>
 
     <!--依赖写入dependencies下，子模块不需要引入就能使用-->
     <dependencies>
@@ -67,12 +78,16 @@
             <artifactId>spring-boot-starter-log4j2</artifactId>
             <version>${spring-boot.version}</version>
         </dependency>
-
     </dependencies>
 
     <!--第三方依赖放入dependencyManagement下面，子模块直接引入不需要写版本号-->
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.goudong</groupId>
+                <artifactId>goudong-common</artifactId>
+                <version>${goudong-common.version}</version>
+            </dependency>
             <!--spring cloud-->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
@@ -81,6 +96,15 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!--springboot-->
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-starter-parent</artifactId>-->
+<!--                <version>${spring-boot.version}</version>-->
+<!--                <type>pom</type>-->
+<!--                <scope>import</scope>-->
+<!--            </dependency>-->
+
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>springloaded</artifactId>
@@ -211,32 +235,14 @@
 
     <!-- 构建项目需要的信息 -->
     <build>
-        <!--父工程名称-->
-        <finalName>goudong</finalName>
-        <!--读取资源文件-->
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
+                    <fork>true</fork>
+                    <addResources>true</addResources>
                     <classifier>goudong</classifier>
-                </configuration>
-            </plugin>
-            <!--读取资源文件-->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <configuration>
-                    <delimiters>
-                        <!--$开头 $结尾 使用变量-->
-                        <delimit>$</delimit>
-                    </delimiters>
                 </configuration>
             </plugin>
         </plugins>

@@ -1,0 +1,15 @@
+server:
+  port: 7000
+eureka:
+  instance:
+    hostname: eureka7000 #eureka服务端的实例名称
+  client:
+    register-with-eureka: false #是否将自己注册到注册中心
+    fetch-registry: false #是否从eureka中获取注册信息
+    service-url:
+      # 需要使用ip端口和一个字符串，随便都可以
+#      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka # 单机Eureka服务
+      defaultZone: http://eureka7001:7001/eureka/, http://eureka7002:7002/eureka/
+  server:
+    enable-self-preservation: false #关闭自我保护机制（默认时True）
+    eviction-interval-timer-in-ms: 5000 #测试使用，设置剔除的服务间隔单位ms

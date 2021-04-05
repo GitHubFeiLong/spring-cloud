@@ -6,6 +6,9 @@ spring:
   cloud:
     config:
       enabled: false
+    loadbalancer:
+      ribbon:
+        enabled: false # 关闭ribbon
   datasource: #数据库
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -86,3 +89,4 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:9000/eureka/ # 将服务注册到两个注册中心时用逗号隔开
+

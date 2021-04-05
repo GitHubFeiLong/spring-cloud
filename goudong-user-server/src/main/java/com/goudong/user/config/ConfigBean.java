@@ -17,16 +17,10 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class ConfigBean {
 
-    // 新版cloud 会报错 No instances available for XXXX
-//    @Bean
-////    @LoadBalanced // 客户端开启Ribbon负载均衡的工具
-//    public RestTemplate getRestTemplate() {
-//        return new RestTemplate();
-//    }
-
+    // TODO 坑真多
     @Bean
-//    @LoadBalanced // 客户端开启Ribbon负载均衡的工具
-    public RestOperations restTemplate(RestTemplateBuilder builder) {
-        return builder.build();
+    @LoadBalanced // 使用该注解可以使用服务id访问，不然java.net.UnknownHostException: GOUDONG-OAUTH2-SERVER
+    public RestTemplate getRestTemplate() {
+        return new RestTemplate();
     }
 }

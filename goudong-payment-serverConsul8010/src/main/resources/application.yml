@@ -1,0 +1,12 @@
+server:
+  port: 8010
+spring:
+  application:
+    name: goudong-payment-consul-server
+  #consul注册中心配置
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        service-name: ${spring.application.name}

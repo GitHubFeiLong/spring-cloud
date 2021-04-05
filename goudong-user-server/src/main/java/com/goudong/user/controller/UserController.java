@@ -8,8 +8,10 @@ import com.goudong.user.util.JwtTokenUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestOperations;
@@ -77,15 +79,19 @@ public class UserController {
         return Result.ofSuccess(map);
     }
 
-    @Resource
-    private RestOperations restTemplate;
 //    @Resource
-//    private RestTemplate restTemplate;
+//    private RestOperations restTemplate;
+    @Resource
+    private RestTemplate restTemplate;
 
+    @Resource
+    private LoadBalancerClient loadBalancedClient;   // 注入LoadBalancerClient
     @GetMapping("/demo1")
     public String demo1 () {
-        String url = "http://GOUDONG-OAUTH2-SERVER/oauth/we-chat/demo1";
-        return restTemplate.getForObject(url,String.class);
+        // 获取服务中一个实例
+//        ServiceInstance instance = loadBalancedClient.choose("GOUDONG-OAUTH2-SERVER");
+//        String url = "http://" + instance.getHost() + ":" + instance.getPort() + "/oauth/we-chat/demo1";
+        return restTemplate.getForObject("http://GOUDONG-OAUTH2-SERVER"+"/oauth/we-chat/demo1", String.class);
     }
 
     @GetMapping("/client")
