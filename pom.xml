@@ -20,6 +20,12 @@
         <module>goudong-payment-server8000</module>
         <module>goudong-payment-server8001</module>
         <module>goudong-payment-serverConsul8010</module>
+        <module>goudong-hystrix-payment-server</module>
+        <module>goudong-hystrix-order-server80</module>
+        <module>goudong-consumer-hystrix-dashboard9001</module>
+        <module>goudong-gateway-server9527</module>
+        <module>goudong-config-server3344</module>
+        <module>goudong-config-client3355</module>
     </modules>
 
 

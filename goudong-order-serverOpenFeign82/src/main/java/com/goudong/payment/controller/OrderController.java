@@ -27,4 +27,12 @@ public class OrderController {
         return paymentService.demo1();
     }
 
+    /**
+     * ribbon 客户端一般默认等待1s钟返回
+     * @return
+     */
+    @GetMapping("/timeout")
+    public Result timeout () {
+        return paymentService.timeout();
+    }
 }

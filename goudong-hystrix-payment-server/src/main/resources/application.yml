@@ -1,0 +1,16 @@
+server:
+  port: 8001
+spring:
+  application:
+    name: goudong-hystrix-payment-server
+# eureka 客户端配置
+eureka:
+  instance:
+    prefer-ip-address: true #使用IP地址注册
+    hostname: localhost # 实例主机名，如果不配置，服务名转host:port格式时host为系统生成的ASUS_PC，无法访问
+    instance-id: ${spring.cloud.client.ip-address}:${server.port} #向注册中心注册id（ip 和端口）
+    lease-renewal-interval-in-seconds: 5 #发送心跳的间隔
+    lease-expiration-duration-in-seconds: 10 #续约到期的时间
+  client:
+    service-url:
+      defaultZone: http://eureka7000:7000/eureka

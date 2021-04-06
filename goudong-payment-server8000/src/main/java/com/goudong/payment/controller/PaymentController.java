@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 类描述：
@@ -33,6 +34,17 @@ public class PaymentController {
         return Result.ofSuccess(serverPort +" : PaymentController demo1 方法 ");
     }
 
+    @GetMapping("/demo2")
+    public Result demo2() {
+        int timenum = 2;
+        try {
+            TimeUnit.SECONDS.sleep(timenum);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return Result.ofSuccess(serverPort + "线程池：" + Thread.currentThread().getName() + "demo1 耗时 "+timenum+"秒钟");
+    }
+
     @Resource
     private DiscoveryClient discoveryClient;
 
@@ -46,6 +58,18 @@ public class PaymentController {
         map.put("instances", instances);
 
         return Result.ofSuccess(map);
+    }
+
+    /**
+     * 测试feign 超时
+     * @return
+     * @throws InterruptedException
+     */
+    @GetMapping("/timeout")
+    public Result timeout () throws InterruptedException {
+        TimeUnit.SECONDS.sleep(3);
+
+        return Result.ofSuccess();
     }
 
 }

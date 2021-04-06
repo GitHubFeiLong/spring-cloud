@@ -1,0 +1,26 @@
+# bootstrap 系统级，优先级高
+server:
+  port: 3366
+spring:
+  application:
+    name: config-client
+  cloud:
+    config:
+      label: main #分支名称
+      name: config #文件名称
+      profile: dev # 文件前缀
+      uri: http://localhost:3344 # 服务端配置中心地址
+
+#eureka
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:7000/eureka
+
+# 1. 监控配置
+#暴露监控端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

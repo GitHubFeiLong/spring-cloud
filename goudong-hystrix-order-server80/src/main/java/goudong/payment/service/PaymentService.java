@@ -1,4 +1,4 @@
-package com.goudong.payment.service;
+package goudong.payment.service;
 
 import com.goudong.module.pojo.Result;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.GetMapping;
  * @Version 1.0
  */
 @Component
-@FeignClient(value = "GOUDONG-PAYMENT-SERVER")
+@FeignClient(value = "GOUDONG-HYSTRIX-PAYMENT-SERVER", fallback = PaymentServiceImpl.class) // fallback定义兜底
 public interface PaymentService {
 
     @GetMapping("/api/payment/demo1")
     Result demo1();
 
-    @GetMapping("/api/payment/timeout")
-    Result timeout ();
+    @GetMapping("/api/payment/demo2")
+    Result demo2 ();
 }

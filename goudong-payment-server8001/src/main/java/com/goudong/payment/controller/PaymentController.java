@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * 类描述：
  *
@@ -25,4 +27,17 @@ public class PaymentController {
     public Result demo1() {
         return Result.ofSuccess(serverPort +" : PaymentController demo1 方法 ");
     }
+
+    @GetMapping("/demo2")
+    public Result demo2() {
+        int timenum = 2;
+        try {
+            TimeUnit.SECONDS.sleep(timenum);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return Result.ofSuccess(serverPort + "线程池：" + Thread.currentThread().getName() + "demo1 耗时 "+timenum+"秒钟");
+    }
+
+
 }

@@ -15,3 +15,21 @@ eureka:
   client:
     service-url:
       defaultZone: http://eureka7000:7000/eureka,http://eureka7001:7001/eureka,http://eureka7002:7002/eureka # 将服务注册到两个注册中心时用逗号隔开
+
+ribbon:
+  ReadTimeout: 5000 #建立连接所用时间（避免超时）
+  ConnectTimeout: 5000 #连接后接口调用时间（避免超时）
+
+#feign:
+#  client:
+#    config:
+#      default:
+#        #建立连接所用的时间，适用于网络状况正常的情况下，两端连接所需要的时间
+#        ConnectTimeOut: 5000
+#        #指建立连接后从服务端读取到可用资源所用的时间
+#        ReadTimeOut: 5000
+
+#logging:
+#  level:
+#    #监控接口，并以指定级别打印日志
+#    com.goudong.payment.service.PaymentService: debug
