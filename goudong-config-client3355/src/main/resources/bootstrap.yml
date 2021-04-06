@@ -10,7 +10,13 @@ spring:
       name: config #文件名称
       profile: dev # 文件前缀
       uri: http://localhost:3344 # 服务端配置中心地址
-
+  #rabbitMQ
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: 123456
+    virtual-host: /vhost01
 #eureka
 eureka:
   client:
