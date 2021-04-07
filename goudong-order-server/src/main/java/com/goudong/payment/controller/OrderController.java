@@ -27,7 +27,7 @@ public class OrderController {
     @Resource
     private RestTemplate restTemplate;
 
-    @Resource
+    //@Resource
     private LoadBalancer loadBalancer;
     @Resource
     private DiscoveryClient discoveryClient;
@@ -59,5 +59,14 @@ public class OrderController {
         ServiceInstance instance = loadBalancer.instance(instances);
         String uri = instance.getUri().toString();
         return Result.ofSuccess(restTemplate.getForObject(uri + "/api/payment/demo1", String.class));
+    }
+
+    /**
+     * zipkin
+     * @return
+     */
+    @GetMapping("/demo4")
+    public Result demo4 () {
+        return restTemplate.getForObject("http://GOUDONG-PAYMENT-SERVER/api/payment/demo3", Result.class);
     }
 }

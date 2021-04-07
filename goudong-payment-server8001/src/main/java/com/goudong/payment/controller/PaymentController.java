@@ -39,5 +39,13 @@ public class PaymentController {
         return Result.ofSuccess(serverPort + "线程池：" + Thread.currentThread().getName() + "demo1 耗时 "+timenum+"秒钟");
     }
 
+    /**
+     * 测试zipkin
+     * @return
+     */
+    @GetMapping("/demo3")
+    public Result demo3 () {
+        return Result.ofSuccess();
+    }
 
 }

@@ -28,6 +28,10 @@
         <module>goudong-config-client3355</module>
         <module>goudong-stream-rabbitmq-server8801</module>
         <module>goudong-stream-rabbitmq-server8802</module>
+        <module>cloudalibaba-provider-payment9001</module>
+        <module>cloudalibaba-provider-payment9002</module>
+        <module>cloudalibaba-provider-payment9003</module>
+        <module>cloudalibaba-provider-payment9004</module>
     </modules>
 
 
@@ -48,6 +52,7 @@
         <spring-boot.version>2.3.8.RELEASE</spring-boot.version>
         <springfox.version>3.0.0</springfox.version>
         <spring-cloud-dependencies.version>Hoxton.SR10</spring-cloud-dependencies.version>
+        <spring-cloud-alibaba-dependencies.version>2.1.0.RELEASE</spring-cloud-alibaba-dependencies.version>
         <spring-security-oauth2.version>2.5.0.RELEASE</spring-security-oauth2.version>
         <mysql.version>8.0.16</mysql.version>
         <druid.version>1.2.5</druid.version>
@@ -63,7 +68,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>${spring-boot.version}</version>
+        <version>2.3.8.RELEASE</version>
     </parent>
 
     <!--依赖写入dependencies下，子模块不需要引入就能使用-->
@@ -101,6 +106,14 @@
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
                 <version>${spring-cloud-dependencies.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!--spring cloud alibaba-->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba-dependencies.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

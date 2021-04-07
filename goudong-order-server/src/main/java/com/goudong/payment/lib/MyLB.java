@@ -2,20 +2,19 @@ package com.goudong.payment.lib;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.client.ServiceInstance;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 类描述：
- *
+ * 自定义负载均衡
  * @Author msi
  * @Date 2021-04-05 20:22
  * @Version 1.0
  */
 @Slf4j
-@Component
+//@Component
 public class MyLB implements LoadBalancer{
 
     private AtomicInteger atomicInteger = new AtomicInteger(0);

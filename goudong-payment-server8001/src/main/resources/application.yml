@@ -4,6 +4,14 @@ spring:
   application:
     name: goudong-payment-server
 
+  #zipkin
+  zipkin:
+    base-url: http://localhost:9411
+  sleuth:
+    sampler:
+      #采样率值介于0 到 1之间，1则表示全部采集
+      probability: 1
+
 # eureka 客户端配置
 eureka:
   instance:
@@ -14,4 +22,4 @@ eureka:
     lease-expiration-duration-in-seconds: 10 #续约到期的时间
   client:
     service-url:
-      defaultZone: http://eureka7000:7000/eureka,http://eureka7001:7001/eureka,http://eureka7002:7002/eureka # 将服务注册到两个注册中心时用逗号隔开
+      defaultZone: http://eureka7000:7000/eureka #,http://eureka7001:7001/eureka,http://eureka7002:7002/eureka # 将服务注册到两个注册中心时用逗号隔开

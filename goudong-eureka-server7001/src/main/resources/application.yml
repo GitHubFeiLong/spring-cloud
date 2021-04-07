@@ -9,7 +9,7 @@ eureka:
     service-url:
       # 需要使用ip端口和一个字符串，随便都可以
 #      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka # 单机Eureka服务
-      defaultZone: http://eureka7000:7000/eureka/, http://eureka7002:7002/eureka/
+      defaultZone: http://eureka7000:7000/eureka/ #, http://eureka7002:7002/eureka/
   server:
     enable-self-preservation: false #关闭自我保护机制
     eviction-interval-timer-in-ms: 5000 #测试使用，设置剔除的服务间隔单位ms
